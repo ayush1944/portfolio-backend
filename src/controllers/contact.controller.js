@@ -23,9 +23,10 @@ export const submitContact = async (req, res) => {
 
     if (error) throw error;
 
-    await sendAdminNotification({ name, email, subject, message });
-
-    await sendAutoReply({ name, email });
+    await Promise.allSettled([
+      sendAdminNotification({ name, email, subject, message }),
+      sendAutoReply({ name, email }),
+    ]);
 
     res.status(201).json({
       success: true,
