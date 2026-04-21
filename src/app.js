@@ -5,9 +5,15 @@ import analyticsRoutes from './routes/analytics.routes.js';
 
 const app = express();
 
+const allowedOrigins = [
+  process.env.CLIENT_URL,
+  'https://ayushpal.me',
+  'https://www.ayushpal.me',
+].filter(Boolean);
+
 app.use(
   cors({
-    origin: [process.env.CLIENT_URL],
+    origin: allowedOrigins,
     methods: ['GET', 'POST', 'OPTIONS'],
     allowedHeaders: ['Content-Type'],
   })
